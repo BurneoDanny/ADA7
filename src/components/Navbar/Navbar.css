@@ -1,0 +1,106 @@
+/* Navbar.css */
+
+.navbar {
+  background-color: var(--color-fondo-secundario, #252526);
+  padding: var(--espaciado-base) calc(var(--espaciado-base) * 2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-fondo-principal);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-logo {
+  color: var(--color-texto-principal, #fff);
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.navbar-menu {
+  display: flex;
+  gap: calc(var(--espaciado-base) * 2);
+}
+
+.navbar-menu .menu-item {
+  min-width: auto;
+  max-width: none;
+  padding: calc(var(--espaciado-base) / 2) var(--espaciado-base);
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  flex-direction: row;
+  gap: calc(var(--espaciado-base) / 2);
+}
+
+.navbar-menu .menu-item:hover {
+  background-color: var(--color-fondo-principal, #1e1e1e);
+  border-bottom: 2px solid var(--color-accion);
+  transform: none;
+  box-shadow: none;
+}
+
+.navbar-menu .menu-item.clicked {
+  border-bottom: 2px solid var(--color-foco-ejecucion) !important;
+  box-shadow: none;
+  transform: none;
+}
+
+.navbar-menu .menu-icon-wrapper {
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  border-radius: 0;
+  background-color: transparent;
+  margin-bottom: 0;
+  align-self: center;
+}
+
+.navbar-menu .menu-icon {
+  width: 25px;
+  height: 25px;
+  fill: var(--color-datos-base, #ccc);
+}
+
+.navbar-menu .menu-item:hover .menu-icon {
+  fill: var(--color-foco-ejecucion);
+  background-color: inherit;
+}
+
+.navbar-menu .menu-item.clicked .menu-icon {
+  fill: var(--color-foco-ejecucion);
+}
+
+.navbar-menu .menu-item:hover .menu-icon-wrapper {
+  background-color: var(--color-fondo-principal);
+  transform: scale(1.1);
+}
+
+.navbar-menu .menu-item .menu-title {
+  font-size: 1rem;
+  margin-bottom: 0;
+  align-self: center;
+}
+
+.navbar-menu .menu-description {
+  display: none;
+}
+
+.navbar-tooltip {
+  background-color: var(--color-foco-ejecucion) !important;
+  color: var(--color-fondo-principal) !important;
+  font-size: 0.9rem !important;
+  padding: 5px 10px !important;
+  border-radius: var(--borde-radio) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5) !important;
+  opacity: 1 !important;
+  z-index: 99999;
+}
+
+.navbar-tooltip.react-tooltip[data-tooltip-place="bottom"]::before,
+.navbar-tooltip.react-tooltip[data-tooltip-place="bottom"]::after {
+  border-bottom-color: var(--color-foco-ejecucion) !important;
+}

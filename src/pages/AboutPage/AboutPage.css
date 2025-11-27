@@ -1,0 +1,82 @@
+.about-page-wrapper {
+  color: var(--color-texto-principal, #fff);
+  padding: 40px;
+  background-color: var(--color-fondo-principal, #1e1e1e);
+}
+
+.complexity-panel {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.panel-title {
+  font-size: 2rem;
+  color: var(--color-foco-ejecucion, #00c9ff);
+  border-bottom: 3px solid var(--color-foco-ejecucion);
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  color: var(--color-accion, #fff);
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+
+.complexity-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0 0 10px rgba(0, 201, 255, 0.3);
+}
+
+.complexity-table th,
+.complexity-table td {
+  border: 1px solid #3a3a3a;
+  padding: 12px;
+  text-align: left;
+}
+
+.complexity-table th {
+  background-color: #007bb6;
+  color: #fff;
+  font-weight: bold;
+}
+
+.complexity-table tr:nth-child(even) {
+  background-color: #2a2a2a;
+}
+
+.complexity-table tr:hover {
+  background-color: #353535;
+}
+
+.complexity-notation {
+  font-family: "Consolas", monospace;
+  font-weight: bold;
+  color: var(--color-foco-ejecucion, #00c9ff);
+  font-size: 1.1em;
+}
+
+.explanation-text {
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.explanation-list {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.complexity-separator {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    rgba(0, 201, 255, 0.75),
+    rgba(0, 0, 0, 0)
+  );
+  margin: 30px 0;
+}

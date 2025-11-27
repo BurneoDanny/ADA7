@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wdth,wght@50..200,200..900&display=swap");
+
+:root {
+  font-family: "Inconsolata", monospace;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* ================================================= */
+  /* --- PALETA BASE (Estilo: Matriz de Código / Terminal) --- */
+  /* ================================================= */
+
+  /* 1. Fondo Principal (Terminal Base): Fondo de la aplicación. */
+  --color-fondo-principal: #0d1117;
+  background-color: var(--color-fondo-principal);
+
+  /* 2. Texto Principal (Foreground): Color para el texto general y etiquetas. */
+  --color-texto-principal: #c9d1d9;
+
+  /* ================================================= */
+  /* --- COLORES DE CÓDIGO Y TRANSFORMACIÓN --- */
+  /* ================================================= */
+
+  /* 3. Datos/Base (Code Green): Color de los datos codificados y estables (la matriz de datos). */
+  --color-datos-base: #3a9d23;
+
+  /* 4. Foco/Ejecución (Neon Active): Resalta el código o el dato que está siendo procesado en este instante. */
+  --color-foco-ejecucion: #22e68b;
+
+  /* 5. Acción/Diferenciador (Action Cyan): Botones, enlaces, y elementos de interfaz. */
+  --color-accion: #00bcd4;
+
+  /* 6. Advertencia/Datos Críticos (Collision Orange): Resalta un dígito de entrada que está a punto de ser sustituido. */
+  --color-advertencia: #ffc107;
+
+  /* 7. Error/Dato Agotado (Error Red): Mensajes de error o uso forzado de sustituto repetido. */
+  --color-error: #ff6347;
+
+  /* ================================================= */
+  /* --- ESTRUCTURA --- */
+  /* ================================================= */
+
+  --espaciado-base: 1rem;
+  --borde-radio: 3px;
+}
+
+body,
+html {
+  margin: 0;
+  height: 100%; /* Asegura que el html/body ocupen toda la altura */
+}

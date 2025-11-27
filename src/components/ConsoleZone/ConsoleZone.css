@@ -1,0 +1,42 @@
+.console-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--espaciado-base) / 2);
+}
+
+.console-input {
+  background-color: var(--color-fondo-principal);
+  border: 2px solid var(--color-fondo-secundario);
+  border-radius: var(--borde-radio);
+  padding: var(--espaciado-base);
+  font-size: 1rem;
+  color: var(--color-texto-principal);
+  font-family: monospace;
+  transition: border-color 0.3s ease;
+}
+
+.console-input:focus {
+  outline: none;
+  border-color: var(--color-accion);
+}
+
+.console-input.invalid {
+  border-color: var(--color-error, #f44336);
+}
+
+.console-input.valid {
+  border-color: var(--color-datos-base, #4caf50);
+}
+
+.validation-message {
+  font-size: 0.85rem;
+  padding-left: 5px;
+}
+
+.validation-message.error {
+  color: var(--color-error, #f44336);
+}
+
+.validation-message.success {
+  color: var(--color-datos-base, #4caf50);
+}

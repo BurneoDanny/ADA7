@@ -1,0 +1,114 @@
+.menu-item {
+  background-color: var(--color-fondo-secundario, #252526);
+  border: 1px solid var(--color-fondo-principal);
+  border-radius: var(--borde-radio);
+  padding: calc(var(--espaciado-base) * 1.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  min-width: 280px;
+  max-width: 350px;
+  flex-grow: 1;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    box-shadow 0.3s ease, transform 0.3s ease;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.menu-item:hover {
+  background-color: var(--color-fondo-principal);
+  border-color: var(--color-accion);
+  box-shadow: 0 4px 15px var(--color-accion);
+  transform: translateY(-5px);
+}
+
+.menu-item.clicked {
+  border-color: var(--color-foco-ejecucion) !important;
+  box-shadow: 0 4px 15px var(--color-foco-ejecucion);
+  pointer-events: none;
+  transform: translateY(-5px);
+}
+
+.menu-icon-wrapper {
+  margin-bottom: var(--espaciado-base);
+  padding: var(--espaciado-base);
+  background-color: var(--color-fondo-principal);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  position: relative;
+}
+
+.menu-item:hover .menu-icon-wrapper {
+  background-color: var(--color-foco-ejecucion);
+  transform: scale(1.1);
+}
+
+.menu-icon {
+  width: 60px;
+  height: 60px;
+  fill: var(--color-datos-base);
+  transition: color 0.3s ease;
+}
+
+.menu-item:hover .menu-icon {
+  fill: var(--color-fondo-principal);
+}
+
+.menu-title {
+  color: var(--color-texto-principal);
+  font-size: 1.5rem;
+  margin-bottom: calc(var(--espaciado-base) / 2);
+  transition: color 0.3s ease;
+}
+
+.menu-item:hover .menu-title {
+  color: var(--color-foco-ejecucion);
+}
+
+.menu-description {
+  color: var(--color-texto-principal);
+  font-size: 0.9rem;
+  opacity: 0.8;
+  line-height: 1.4;
+  transition: color 0.3s ease;
+}
+
+.menu-item:hover .menu-description {
+  color: var(--color-texto-principal);
+  opacity: 1;
+}
+
+@media (max-width: 480px) {
+  .menu-item {
+    min-width: 90%;
+    padding: var(--espaciado-base);
+  }
+  .menu-icon {
+    width: 40px;
+    height: 40px;
+  }
+  .menu-title {
+    font-size: 1.2rem;
+  }
+  .menu-description {
+    font-size: 0.8rem;
+  }
+}
+
+.menu-item.overlay-active {
+  background-color: var(--color-fondo-secundario);
+  border-color: var(--color-foco-ejecucion);
+  box-shadow: 0 4px 15px var(--color-foco-ejecucion);
+}
+
+.menu-item.overlay-active:hover {
+  background-color: var(--color-fondo-secundario);
+  border-color: var(--color-foco-ejecucion);
+  transform: translateY(-5px);
+}
