@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  
   "dependencies": {
     "@tsparticles/engine": "^3.9.1",
     "@tsparticles/slim": "^3.9.1",
