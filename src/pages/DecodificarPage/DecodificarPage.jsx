@@ -196,7 +196,7 @@ FIN FUNCIÓN
               <Dropzone
                 onFileAccepted={handleFileAccepted}
                 file={fileToDecode}
-                descripcion="Carga el archivo (.txt) que contiene los datos codificados en Base64. Solo se procesa un único archivo .txt por ejecución."
+                descripcion="Carga el archivo (.txt) que contiene los datos codificados. Solo se procesa un único archivo .txt por ejecución."
               />
             </div>
             <div className="codify-action-wrapper">
