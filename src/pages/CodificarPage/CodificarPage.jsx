@@ -77,43 +77,45 @@ export default function CodificarPage() {
   };
 
   const randomCode = `
-// Algoritmo de Codificación Navhar (Pseudocódigo)
+// Algoritmo de Codificación (Pseudocódigo)
 
-FUNCIÓN navhar_encode(data_array):
-    // Descripción: Toma un array de números, suma una clave y codifica en Base64.
+FUNCIÓN codificar(cadena)
+    usados ← conjunto vacío
+    partes ← lista vacía
     
-    // 1. Definir la clave de codificación (fija)
-    DEFINIR key = 42
-
-    // 2. Sumar la clave a cada elemento del array
-    DEFINIR processed_data = []
-    PARA CADA numero EN data_array HACER
-        AGREGAR (numero + key) A processed_data
+    PARA CADA digito EN cadena HACER
+        num ← convertir digito a entero
+        
+        SI num NO ESTÁ EN usados ENTONCES
+            agregar string(num) a partes
+            agregar num a usados
+        SINO
+            distancia ← 1
+            reemplazo ← nulo
+            
+            MIENTRAS reemplazo ES nulo HACER
+                candidato_izq ← num - distancia
+                candidato_der ← num + distancia
+                
+                SI candidato_izq NO ESTÁ EN usados ENTONCES
+                    reemplazo ← candidato_izq
+                    dist_usada ← -distancia
+                SINO SI candidato_der NO ESTÁ EN usados ENTONCES
+                    reemplazo ← candidato_der
+                    dist_usada ← distancia
+                SINO
+                    distancia ← distancia + 1
+                FIN SI
+            FIN MIENTRAS
+            
+            agregar "[" + string(reemplazo) + ":d" + string(dist_usada) + "]" a partes
+            agregar reemplazo a usados
+        FIN SI
     FIN PARA
-
-    // 3. Convertir el array procesado a una cadena de texto
-    //    separada por comas (e.g., "143, 244, 345, ...")
-    DEFINIR data_str = CONVERTIR_A_CADENA(processed_data, separador: ",")
-
-    // 4. Codificar la cadena de texto en Base64
-    DEFINIR encoded_result = CODIFICAR_A_BASE64(data_str)
-
-    // 5. Devolver el resultado codificado
-    RETORNAR encoded_result
+    
+    RETORNAR unir(partes)
 FIN FUNCIÓN
 
-// -------------------------------------------------------------------
-// Ejemplo de Uso:
-
-// Datos de prueba
-DEFINIR data_to_encode = [101, 202, 303, 404, 505]
-
-// Ejecutar la función
-DEFINIR result = navhar_encode(data_to_encode)
-
-// Mostrar resultados
-MOSTRAR "Datos originales: " + data_to_encode
-MOSTRAR "Datos codificados: " + result
   `;
 
   const getStatusMessage = (currentProgress) => {

@@ -1,32 +1,72 @@
-// src/utils/encodingUtils.js (o donde prefieras colocar utilidades)
+// src/utils/encodingUtils.js
 
 // ----------------------------------------------------
-// 1. Lógica de Codificación (Basada en tu lógica Python)
+// 1. Lógica de Codificación (Basada en tu algoritmo)
 // ----------------------------------------------------
 
 /**
- * Aplica el algoritmo de codificación Navhar: suma 42 y codifica en Base64.
- * @param {number[]} data_array - Array de números a codificar.
- * @returns {string} - Cadena Base64 codificada.
+ * Implementa el algoritmo de codificación de "reemplazo por el vecino no usado más cercano".
+ * NOTA: Este algoritmo asume que los números de entrada son dígitos o valores pequeños
+ * para que la búsqueda del reemplazo termine rápidamente.
+ * @param {string} cadena - La cadena de dígitos a codificar (ej. "12341").
+ * @returns {string} - La cadena codificada.
  */
-export const navhar_encode = (data_array) => {
-    const key = 42;
+const codificar = (cadena) => {
+    // Usamos un Set para la verificación rápida de 'usados'
+    const usados = new Set();
+    const partes = [];
 
-    // 1. Sumar la clave
-    const processed_data = data_array.map((x) => x + key);
+    // Convertimos la cadena en un array de caracteres para iterar
+    for (const digito of cadena) {
+        // Validación: Solo procesamos si el carácter es un dígito
+        if (isNaN(digito) || digito === ' ') continue;
 
-    // 2. Convertir a string separado por comas
-    const data_str = processed_data.join(",");
+        const num = parseInt(digito, 10);
 
-    // 3. Codificar la cadena en Base64
-    // btoa() es una función nativa del navegador para Base64.
-    const encoded_b64 = btoa(data_str);
+        // --- Lógica Principal del Algoritmo ---
 
-    return encoded_b64;
+        if (!usados.has(num)) {
+            // Caso 1: El número no ha sido usado
+            partes.push(String(num));
+            usados.add(num);
+        } else {
+            // Caso 2: El número ya ha sido usado, buscar reemplazo
+            let distancia = 1;
+            let reemplazo = null;
+            let dist_usada = 0;
+
+            while (reemplazo === null) {
+                const candidato_izq = num - distancia;
+                const candidato_der = num + distancia;
+
+                // 1. Buscar a la izquierda
+                if (!usados.has(candidato_izq)) {
+                    reemplazo = candidato_izq;
+                    dist_usada = -distancia;
+                }
+                // 2. Buscar a la derecha
+                else if (!usados.has(candidato_der)) {
+                    reemplazo = candidato_der;
+                    dist_usada = distancia;
+                }
+                // 3. Ninguno encontrado, aumentar distancia y seguir
+                else {
+                    distancia += 1;
+                }
+            }
+
+            // Agregar el formato de reemplazo
+            partes.push(`[${reemplazo}:d${dist_usada}]`);
+            // El reemplazo se considera "usado"
+            usados.add(reemplazo);
+        }
+    }
+
+    return partes.join("");
 };
 
 // ----------------------------------------------------
-// 2. Utilidad para Descargar Archivos
+// 2. Utilidad para Descargar Archivos (sin cambios)
 // ----------------------------------------------------
 
 /**
@@ -53,13 +93,14 @@ export const downloadFile = (data, filename, type = "text/plain") => {
 };
 
 // ----------------------------------------------------
-// 3. Función Principal de Manejo de Codificación
+// 3. Función Principal de Manejo de Codificación (Actualizada)
 // ----------------------------------------------------
 
 /**
- * Lee la entrada, valida, codifica y dispara la descarga.
+ * Lee la entrada, valida, codifica con el nuevo algoritmo y dispara la descarga.
  * @param {File | string} inputData - El objeto File (en modo archivo) o la cadena de texto (en modo consola).
- * @param {string} inputMethod - INPUT_METHOD.FILE o INPUT_METHOD.CONSOLE.
+ * @param {string} inputMethod - "file" o "console".
+ * @param {(progress: number) => void} progressCallback - Función para reportar el progreso.
  */
 export const EncodeFile = async (inputData, inputMethod, progressCallback) => {
     let rawData = null;
@@ -76,24 +117,35 @@ export const EncodeFile = async (inputData, inputMethod, progressCallback) => {
         } else {
             throw new Error("Datos de entrada o método inválido.");
         }
+
+        // *** VALIDACIÓN ADICIONAL: Archivo vacío ***
+        if (rawData.trim() === "") {
+            throw new Error("El archivo de entrada no debe estar vacío.");
+        }
+
         progressCallback(35);
 
-        // 2. Parsear y validar
-        const dataArray = rawData
-            .split(",")
-            .map(s => s.trim())
-            .filter(s => s !== "")
-            .map(Number);
+        // 2. Validar que contenga solo números (dígitos)
+        // Se eliminan espacios y saltos de línea para la validación más estricta de solo dígitos.
+        const cleanedData = rawData.replace(/[\s\n\r]/g, '');
 
-        if (dataArray.some(isNaN)) {
-            throw new Error("El contenido debe contener solo números separados por comas.");
+        // Verifica si la cadena contiene CUALQUIER cosa que no sea un dígito (0-9)
+        // La validación original de tu código se basaba en comas, este algoritmo
+        // trabaja sobre una cadena de dígitos.
+        if (!/^\d+$/.test(cleanedData)) {
+            // Si hay comas, la validación fallará, lo cual es correcto si esperamos SÓLO dígitos
+            // Si se esperan números separados por comas, la validación debería ser: /^\d+(,\d+)*$/
+            // Basado en tu algoritmo que itera CADA digito, asumiremos una cadena de SÓLO dígitos.
+            throw new Error("El contenido debe contener solo dígitos (0-9), sin separadores.");
         }
+
         progressCallback(60);
 
-
-        // 3. Codificar
-        const encodedResult = navhar_encode(dataArray);
+        // 3. Codificar usando el nuevo algoritmo
+        // El nuevo algoritmo 'codificar' espera una cadena de dígitos.
+        const encodedResult = codificar(cleanedData);
         progressCallback(90);
+
         // 4. Descargar
         const encodedFilename = `${originalFilename}_codificado.txt`;
         downloadFile(encodedResult, encodedFilename);

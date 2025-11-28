@@ -10,6 +10,7 @@ import { useState } from "react";
 import Dropzone from "../../components/Dropzone/Dropzone";
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { DecodeFile } from "../../utils/Decode";
 // import { DecodeFile } from "../../utils/Decoding"; // crear!!!
 
 const INPUT_METHOD = {
@@ -66,42 +67,42 @@ export default function DecodificarPage() {
   };
 
   const randomCode = `
-// Algoritmo de Decodificación Navhar-Inverse (Pseudocódigo)
-
-FUNCIÓN navhar_decode(encoded_str):
-    // Descripción: Deshace el proceso: Descodifica Base64, resta la clave.
-    
-    // 1. Definir la clave de descodificación (debe coincidir con la de codificación)
-    DEFINIR key = 42
-
-    // 2. Descodificar la cadena Base64 al texto original
-    DEFINIR data_str = DECODIFICAR_DE_BASE64(encoded_str)
-
-    // 3. Convertir la cadena de texto separada por comas a un array de números
-    DEFINIR processed_data = CONVERTIR_A_ARRAY(data_str, separador: ",")
-
-    // 4. Restar la clave a cada elemento para obtener los datos originales
-    DEFINIR original_data = []
-    PARA CADA numero EN processed_data HACER
-        AGREGAR (numero - key) A original_data
-    FIN PARA
-
-    // 5. Devolver el array de datos originales
-    RETORNAR original_data
+// Algoritmo de Decodificación (Pseudocódigo)
+FUNCIÓN decodificar(codigo_str)
+    resultado ← lista vacía
+    i ← 0
+    
+    MIENTRAS i < longitud(codigo_str) HACER
+        SI codigo_str[i] = '[' ENTONCES
+            cierre ← encontrar posición de ']' desde i
+            contenido ← subcadena de codigo_str desde i+1 hasta cierre
+            
+            separar contenido por ':d' en partes
+            valor ← convertir partes[0] a entero
+            distancia ← convertir partes[1] a entero
+            
+            original ← valor - distancia
+            agregar string(original) a resultado
+            
+            i ← cierre + 1
+            
+        SINO SI codigo_str[i] es dígito O (codigo_str[i] = '-' Y siguiente es dígito) ENTONCES
+            num_str ← ""
+            
+            MIENTRAS i < longitud(codigo_str) Y (codigo_str[i] es dígito O codigo_str[i] = '-') HACER
+                num_str ← num_str + codigo_str[i]
+                i ← i + 1
+            FIN MIENTRAS
+            
+            agregar num_str a resultado
+            
+        SINO
+            i ← i + 1
+        FIN SI
+    FIN MIENTRAS
+    
+    RETORNAR unir(resultado)
 FIN FUNCIÓN
-
-// -------------------------------------------------------------------
-// Ejemplo de Uso:
-
-// Datos codificados de prueba (ej: "MTQzLCAyNDQsIDM0NSwgNDQ2LCA1NDc=")
-DEFINIR encoded_input = "MTQzLCAyNDQsIDM0NSwgNDQ2LCA1NDc="
-
-// Ejecutar la función
-DEFINIR result = navhar_decode(encoded_input)
-
-// Mostrar resultados
-MOSTRAR "Datos codificados: " + encoded_input
-MOSTRAR "Datos originales: " + result
   `;
 
   const getStatusMessage = (currentProgress) => {
@@ -133,14 +134,7 @@ MOSTRAR "Datos originales: " + result
         setProgress(Math.min(100, Math.max(0, step)));
       };
 
-      // Aquí se usaría la función DecodeFile
-      // const result = await DecodeFile(
-      //   inputData,
-      //   INPUT_METHOD.FILE,
-      //   progressCallback
-      // );
-
-      const result = true;
+      const result = await DecodeFile(inputData, progressCallback);
 
       if (result.success) {
         setProgress(100);
